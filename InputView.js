@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Button, KeyboardAvoidingView  } from 'react-native';
 
 const styles = StyleSheet.create({
   picoButtonBackground: {
@@ -55,11 +55,11 @@ export default class Configure extends Component {
   render() {
     return (
       <View>
-        <Text style={{ fontSize: 20, color: "#4d4d4d", textAlign: "center" }}>{this.state.title}:</Text>
+        <Text style={{ fontSize: 20, color: "#4d4d4d", textAlign: "center", marginTop: 4 }}>{this.state.title}:</Text>
         <View style={{ flexDirection: "row"}}>
           <TextInput autoCapitalize="none" style={{ marginBottom: 2.5, marginTop: 2.5, height: 35, width: 300, backgroundColor: '#e7e7e7', borderRadius: 0, paddingHorizontal: 10 }} placeholderTextColor={'#cccccc'} onChangeText={(value)=> {this.props.onChange(this.props.name, value);}} value={this.props.value} />
         </View>
-      </View>
+      </View >
     );
   }
 }
