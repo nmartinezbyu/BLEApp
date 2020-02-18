@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet } from 'react-native';
+import { Text, View, TextInput, StyleSheet, Button, Image } from 'react-native';
+import BLEIcon from "./BLE_Header.png"
+import InputView from './InputView';
 
 const styles = StyleSheet.create({
-  picoButtonBackground: {
+  selectedPicoButtonBackground: {
     backgroundColor: "rgba(15,134,193,.7)",
+    borderRadius: 5,
+    marginTop: 0,
+    marginLeft: 5,
+    marginRight: 5
+  },
+  selectedPicoButton: {
+    margin: 6,
+    paddingHorizontal: 6,
+    textAlign: "center",
+    color: 'white',
+    fontSize: 20
+  },
+  picoButtonBackground: {
+    backgroundColor: "rgba(100,100,100,.7)",
     borderRadius: 5,
     marginTop: 0,
     marginLeft: 5,
@@ -22,12 +38,12 @@ export default class Configure extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "ASCIIToHex",
-      result: ""
+      private: false,
+      public: false
     }
 
     this.onChange = this.onChange.bind(this);
-    this.convert = this.convert.bind(this);
+    this.selectAdressType = this.selectAdressType.bind(this);
   }
 
   onChange(key, value) {
@@ -37,35 +53,83 @@ export default class Configure extends Component {
     }))
   }
 
-  convert() {
-    if(this.state.value) {
-      var data = this.state.value;
-      let result = "";
-      for(var i = 0; i < data.length; i++) {
-        if(i != data.length - 1) {
-          result = result + data.charCodeAt(i).toString(16) + " ";
-        }
-        else {
-          result = result + data.charCodeAt(i).toString(16);
-        }
-      }
-      this.setState({
-        result: result
-      });
+  selectAdressType(type) {
+    let publicType = false
+    let privateType = false
+    if(type === "Private") {
+      publicType = false
+      privateType = true
     }
+    else {
+      publicType = true
+      privateType = false
+    }
+
+    this.setState({
+      addressType: type,
+      public: publicType,
+      private: privateType
+    })
   }
 
+
   render() {
+    console.log(this.state.addressType);
     return (
-      <View style={{ justifyContent: "center", flexGrow: 1, flexDirection: "column", marginLeft: 10 }}>
-        <Text style={{ fontSize: 20, color: "#4d4d4d" }}>{this.state.title}:</Text>
-        <View style={{ flexDirection: "row"}}>
-          <TextInput autoCapitalize="none" style={{ marginBottom: 2.5, marginTop: 2.5, height: 35, width: 300, backgroundColor: '#e7e7e7', borderRadius: 0, paddingHorizontal: 10 }} placeholderTextColor={'#cccccc'} onChangeText={(value)=> {this.onChange("value", value);}} value={this.state.value} />
-          <View style={styles.picoButtonBackground}>
-            <Text style={styles.picoButton} onPress={this.convert}>Convert</Text>
+      <View style={{ justifyContent: 'space-evenly', flexGrow: 1, flexDirection: "column", alignItems:"center", marginBottom: 30 }}>
+        <Image source={BLEIcon} style={{height: 110, width: 130, marginTop: 30}}/>
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "#4d4d4d" }} >Enter Configuration Parameters</Text>
+        <InputView
+          title="BLE server address"
+          value={this.state.address}
+          name="address"
+          onChange={this.onChange}
+        />
+        <View style={{flexDirection: 'column', justifyContent: 'space-between'}}>
+          <Text style={{ fontSize: 20, color: "#4d4d4d", marginBottom: 10 }}>BLE Address Type:</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={(this.state.public) ? styles.selectedPicoButtonBackground : styles.picoButtonBackground}>
+              <Text
+                onPress={() => {this.selectAdressType("Public");}}
+                style={styles.picoButton}
+              >
+                Public
+              </Text>
+            </View>
+            <View style={(this.state.private) ? styles.selectedPicoButtonBackground : styles.picoButtonBackground}>
+              <Text
+                onPress={() => {this.selectAdressType("Private");}}
+                style={styles.picoButton}
+              >
+                Private
+              </Text>
+            </View>
           </View>
         </View>
-        <Text style={{ fontSize: 20, color: "#4d4d4d" }}>{"Result: "+this.state.result}</Text>
+        <InputView
+          title="Device Name"
+          value={this.state.name}
+          name="name"
+          onChange={this.onChange}
+        />
+        <InputView
+          title="Password"
+          value={this.state.password}
+          name="password"
+          onChange={this.onChange}
+        />
+        <InputView
+          title="Sample Interval"
+          value={this.state.sampleInterval}
+          name="sampleInterval"
+          onChange={this.onChange}
+        />
+        <InputView
+          title="Number of samples per interval"
+          value={this.state.numSamplesPerInterval}
+          name="numSamplesPerInterval"
+          onChange={this.onChange}
+        />
       </View>
     );
   }
