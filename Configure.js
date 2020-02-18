@@ -130,6 +130,14 @@ export default class Configure extends Component {
           name="numSamplesPerInterval"
           onChange={this.onChange}
         />
+        <View style={styles.selectedPicoButtonBackground}>
+          <Text
+            onPress={() => {}}
+            style={styles.picoButton}
+          >
+            Update
+          </Text>
+        </View>
       </View>
     );
   }
