@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Button, Image, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+
+import { Header } from 'react-native-elements';
 import BLEIcon from "./BLE_Header.png"
 import InputView from './InputView';
 
@@ -92,71 +94,77 @@ export default class Configure extends Component {
   render() {
     console.log(this.state.addressType);
     return (
-      <ScrollView>
-        <View style={{ justifyContent: 'space-evenly', flexGrow: 1, flexDirection: "column", alignItems:"center", marginBottom: 30 }} behavior="height">
-          <Image source={BLEIcon} style={styles.bleicon}/>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#4d4d4d" }} >Enter Configuration Parameters</Text>
-          <InputView
-            title="BLE server address"
-            value={this.state.address}
-            name="address"
-            onChange={this.onChange}
-          />
-          <View style={{flexDirection: 'column', justifyContent: 'space-between'}}>
-            <Text style={{ fontSize: 20, color: "#4d4d4d", marginBottom: 10 }}>BLE Address Type:</Text>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={(this.state.public) ? styles.selectedPicoButtonBackground : styles.picoButtonBackground}>
-                <Text
-                  onPress={() => {this.selectAdressType("Public");}}
-                  style={styles.picoButton}
-                >
-                  Public
-                </Text>
-              </View>
-              <View style={(this.state.private) ? styles.selectedPicoButtonBackground : styles.picoButtonBackground}>
-                <Text
-                  onPress={() => {this.selectAdressType("Private");}}
-                  style={styles.picoButton}
-                >
-                  Private
-                </Text>
+      <View>
+        <Header
+          centerComponent={{ text: 'Configure', style: { color: '#fff', fontSize: 20 } }}
+          rightComponent={{ icon: 'bluetooth', color: '#fff', size: 33 }}
+        />
+        <ScrollView>
+          <View style={{ justifyContent: 'space-evenly', flexGrow: 1, flexDirection: "column", alignItems:"center", marginBottom: 30 }} behavior="height">
+            <Image source={BLEIcon} style={styles.bleicon}/>
+            <Text style={{ fontSize: 20, fontWeight: "bold", color: "#4d4d4d" }} >Enter Configuration Parameters</Text>
+            <InputView
+              title="BLE server address"
+              value={this.state.address}
+              name="address"
+              onChange={this.onChange}
+            />
+            <View style={{flexDirection: 'column', justifyContent: 'space-between'}}>
+              <Text style={{ fontSize: 20, color: "#4d4d4d", marginBottom: 10 }}>BLE Address Type:</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={(this.state.public) ? styles.selectedPicoButtonBackground : styles.picoButtonBackground}>
+                  <Text
+                    onPress={() => {this.selectAdressType("Public");}}
+                    style={styles.picoButton}
+                  >
+                    Public
+                  </Text>
+                </View>
+                <View style={(this.state.private) ? styles.selectedPicoButtonBackground : styles.picoButtonBackground}>
+                  <Text
+                    onPress={() => {this.selectAdressType("Private");}}
+                    style={styles.picoButton}
+                  >
+                    Private
+                  </Text>
+                </View>
               </View>
             </View>
+            <InputView
+              title="Device Name"
+              value={this.state.name}
+              name="name"
+              onChange={this.onChange}
+            />
+            <InputView
+              title="Password"
+              value={this.state.password}
+              name="password"
+              onChange={this.onChange}
+            />
+            <InputView
+              title="Sample Interval"
+              value={this.state.sampleInterval}
+              name="sampleInterval"
+              onChange={this.onChange}
+            />
+            <InputView
+              title="Number of samples per interval"
+              value={this.state.numSamplesPerInterval}
+              name="numSamplesPerInterval"
+              onChange={this.onChange}
+            />
+            <View style={styles.updatePicoButtonBackground}>
+              <Text
+                onPress={() => {}}
+                style={styles.picoButton}
+              >
+                Update
+              </Text>
+            </View>
           </View>
-          <InputView
-            title="Device Name"
-            value={this.state.name}
-            name="name"
-            onChange={this.onChange}
-          />
-          <InputView
-            title="Password"
-            value={this.state.password}
-            name="password"
-            onChange={this.onChange}
-          />
-          <InputView
-            title="Sample Interval"
-            value={this.state.sampleInterval}
-            name="sampleInterval"
-            onChange={this.onChange}
-          />
-          <InputView
-            title="Number of samples per interval"
-            value={this.state.numSamplesPerInterval}
-            name="numSamplesPerInterval"
-            onChange={this.onChange}
-          />
-          <View style={styles.updatePicoButtonBackground}>
-            <Text
-              onPress={() => {}}
-              style={styles.picoButton}
-            >
-              Update
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }
