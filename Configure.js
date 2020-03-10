@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   picoButtonBackground: {
     backgroundColor: "rgba(100,100,100,.7)",
     borderRadius: 5,
-    marginTop: 0,
+    marginTop: 5,
     marginLeft: 5,
     marginRight: 5
   },

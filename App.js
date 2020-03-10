@@ -5,7 +5,11 @@
  * @format
  * @flow
  */
-import React from 'react';
+
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,12 +29,11 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
-
+export default function App() {
   return (
-    <Configure/>
+    <NavigationContainer><Configure/></NavigationContainer>
   );
-};
+}
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -70,5 +73,3 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
-export default App;
