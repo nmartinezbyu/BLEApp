@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Button, Image, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-
-import { Header } from 'react-native-elements';
+import { Header, Overlay } from 'react-native-elements';
 import BLEIcon from "./BLE_Header.png"
 import InputView from './InputView';
+import BluetoothDevices from './Components/BluetoothDevices';
 
 const styles = StyleSheet.create({
   selectedPicoButtonBackground: {
@@ -57,10 +57,12 @@ export default class Configure extends Component {
     super(props);
     this.state = {
       private: false,
-      public: false
+      public: false,
+      visible: false
     }
 
     this.onChange = this.onChange.bind(this);
+    this.toggleOverlay = this.toggleOverlay.bind(this);
     this.selectAdressType = this.selectAdressType.bind(this);
   }
 
@@ -69,6 +71,12 @@ export default class Configure extends Component {
       ...state,
       [key]: value
     }))
+  }
+
+  toggleOverlay() {
+    this.setState({
+      visible: !this.state.visible
+    })
   }
 
   selectAdressType(type) {
@@ -97,7 +105,7 @@ export default class Configure extends Component {
       <View>
         <Header
           centerComponent={{ text: 'Configure', style: { color: '#fff', fontSize: 20 } }}
-          rightComponent={{ icon: 'bluetooth', color: '#fff', size: 33 }}
+          rightComponent={{ icon: 'bluetooth', color: '#fff', size: 33, onPress: this.toggleOverlay }}
         />
         <ScrollView>
           <View style={{ justifyContent: 'space-evenly', flexGrow: 1, flexDirection: "column", alignItems:"center", marginBottom: 30 }} behavior="height">
@@ -164,6 +172,7 @@ export default class Configure extends Component {
             </View>
           </View>
         </ScrollView>
+        {this.state.visible && <BluetoothDevices visible={this.state.visible} toggle={this.toggleOverlay}/>}
       </View>
     );
   }
