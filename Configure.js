@@ -102,10 +102,11 @@ export default class Configure extends Component {
   render() {
     console.log(this.state.addressType);
     return (
-      <View>
+      <View style={{flex: 1}}>
         <Header
+          containerStyle={ Platform.OS === 'ios' ? {} : { height: "10%", alignItems: "center", justifyContent: "center" } }
           centerComponent={{ text: 'Configure', style: { color: '#fff', fontSize: 20 } }}
-          rightComponent={{ icon: 'bluetooth', color: '#fff', size: 33, onPress: this.toggleOverlay }}
+          rightComponent={Platform.OS === 'ios' ? { icon: 'bluetooth', color: '#fff', size: 33, onPress: this.toggleOverlay } : { icon: 'bluetooth', color: '#fff', size: 28, onPress: this.toggleOverlay }}
         />
         <ScrollView>
           <View style={{ justifyContent: 'space-evenly', flexGrow: 1, flexDirection: "column", alignItems:"center", marginBottom: 30 }} behavior="height">
