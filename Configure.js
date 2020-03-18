@@ -70,8 +70,22 @@ export default class Configure extends Component {
   onChange(key, value) {
     this.setState(state => ({
       ...state,
-      [key]: value
+      [key]: this.convert(value)
     }))
+  }
+
+  convert(value) {
+    var data = value;
+    let result = "";
+    for(var i = 0; i < data.length; i++) {
+      if(i != data.length - 1) {
+        result = result + data.charCodeAt(i).toString(16) + " ";
+      }
+      else {
+        result = result + data.charCodeAt(i).toString(16);
+      }
+    }
+    return result;
   }
 
   toggleOverlay() {

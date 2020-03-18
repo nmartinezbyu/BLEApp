@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Card } from 'react-native-elements';
 import Device from './Device';
 
 const styles = StyleSheet.create({
   selectedPicoButtonBackground: {
     backgroundColor: "rgba(15,134,193,.7)",
     borderRadius: 5,
-    marginTop: 5,
-    marginLeft: 5,
-    marginRight: 5
+    marginTop: 4,
+    marginLeft: 4,
+    marginRight: 4
   },
   picoButton: {
-    margin: 6,
-    paddingHorizontal: 6,
+    margin: 4,
+    paddingHorizontal: 4,
     textAlign: "center",
     color: 'white',
-    fontSize: 20
+    fontSize: 18
   }
 })
 
@@ -23,16 +24,31 @@ export default class Configure extends Component {
 
   render() {
     return (
-        <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-          <Text style={{ fontSize: 25 }}>Some Device</Text>
-          <View style={styles.selectedPicoButtonBackground}>
-            <Text
-              style={styles.picoButton}
-            >
-              Select
-            </Text>
+        <Card>
+          <View style={{ flexDirection: "row", justifyContent:  "space-between", alignItems: "center"}}>
+            <View>
+              <Text style={{ fontSize: 15 }}>1E:AD:F3:58:B9:D3</Text>
+              <Text>Some Name</Text>
+              <Text>Connectable?</Text>
+            </View>
+            <View style={styles.selectedPicoButtonBackground}>
+              <Text
+                style={styles.picoButton}
+              >
+                Connect
+              </Text>
+            </View>
           </View>
-        </View>
+        </Card>
+
     );
   }
 }
+
+/*
+      <Card>
+        <Text style={{fontWeight: "bold", fontSize: 20}}>{this.props.id}</Text>
+        <Text style={{fontSize: 15}}>{(this.props.name) ? this.props.name : "<new device>"}</Text>
+        <Text style={{fontSize: 10}}>{(this.props.isConnectable) ? "Connectable" : "Not Connectable"}</Text>
+      </Card>
+*/

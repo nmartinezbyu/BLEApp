@@ -27,25 +27,7 @@ export default class Configure extends Component {
       result: ""
     }
 
-    this.convert = this.convert.bind(this);
-  }
-
-  convert() {
-    if(this.props.value) {
-      var data = this.props.value;
-      let result = "";
-      for(var i = 0; i < data.length; i++) {
-        if(i != data.length - 1) {
-          result = result + data.charCodeAt(i).toString(16) + " ";
-        }
-        else {
-          result = result + data.charCodeAt(i).toString(16);
-        }
-      }
-      this.setState({
-        result: result
-      });
-    }
+    //this.convert = this.convert.bind(this);
   }
   // <View style={styles.picoButtonBackground}>
   //   <Text style={styles.picoButton} onPress={this.convert}>Convert</Text>
