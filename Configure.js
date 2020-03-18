@@ -57,7 +57,8 @@ export default class Configure extends Component {
     super(props);
     this.state = {
       private: false,
-      public: false,
+      public: true,
+      addressType: "Public",
       visible: false
     }
 
@@ -100,7 +101,6 @@ export default class Configure extends Component {
 
 
   render() {
-    console.log(this.state.addressType);
     return (
       <View style={{flex: 1}}>
         <Header
