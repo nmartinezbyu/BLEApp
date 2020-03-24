@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, StyleSheet, Button, Image, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { BleManager } from 'react-native-ble-plx';
 import { Header, Overlay } from 'react-native-elements';
 import BLEIcon from "./BLE_Header.png"
 import InputView from './InputView';
@@ -62,9 +63,13 @@ export default class Configure extends Component {
       visible: false
     }
 
+    this.manager = new BleManager()
+
     this.onChange = this.onChange.bind(this);
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.selectAdressType = this.selectAdressType.bind(this);
+    this.scanAndConnect = this.scanAndConnect.bind(this);
+    this.connect = this.connect.bind(this);
   }
 
   onChange(key, value) {
@@ -89,9 +94,57 @@ export default class Configure extends Component {
   }
 
   toggleOverlay() {
+    const subscription = this.manager.onStateChange((state) => {
+        if (state === 'PoweredOn') {
+            this.scanAndConnect();
+            subscription.remove();
+        }
+    }, true);
+
     this.setState({
-      visible: !this.state.visible
+      visible: !this.state.visible,
+      devices: {},
+      connection: null
+
     })
+  }
+
+  scanAndConnect() {
+    this.manager.startDeviceScan(null, null, (error, device) => {
+        if (error) {
+            console.log("error", error)
+            return
+        }
+        else {
+          this.setState({
+            devices: {
+              ...this.state.device,
+              [device.id]: {
+                id: device.id,
+                name: device.name,
+                isConnectable: device.isConnectable,
+                device
+              }
+            }
+
+          })
+          if(Object.keys(this.state.devices).length > 20)this.manager.stopDeviceScan();
+        }
+    });
+  }
+
+  connect(d) {
+    console.log("attempting connection");
+    d.connect().then((device) => {
+        return device.discoverAllServicesAndCharacteristics()
+    })
+    .then((device) => {
+      this.setState({connection: device});
+       console.log(device);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
   }
 
   selectAdressType(type) {
@@ -187,7 +240,7 @@ export default class Configure extends Component {
             </View>
           </View>
         </ScrollView>
-        {this.state.visible && <BluetoothDevices visible={this.state.visible} toggle={this.toggleOverlay}/>}
+        {this.state.visible && <BluetoothDevices visible={this.state.visible} toggle={this.toggleOverlay} devices={this.state.devices} connect={this.connect}/>}
       </View>
     );
   }

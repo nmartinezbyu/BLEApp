@@ -27,13 +27,14 @@ export default class Configure extends Component {
         <Card containerStyle={{ margin: 5, flex: 1 }}>
           <View style={{ flexDirection: "row", justifyContent:  "space-between", alignItems: "center"}}>
             <View>
-              <Text style={{ fontSize: 15 }}>1E:AD:F3:58:B9:D3</Text>
-              <Text>Some Name</Text>
-              <Text>Connectable?</Text>
+              <Text style={{ fontSize: 15 }}>{this.props.id}</Text>
+              <Text>{this.props.name}</Text>
+              <Text>{this.props.isConnectable}</Text>
             </View>
             <View style={styles.selectedPicoButtonBackground}>
               <Text
                 style={styles.picoButton}
+                onPress={()=>{ this.props.connect(this.props.device); }}
               >
                 Connect
               </Text>
@@ -44,11 +45,3 @@ export default class Configure extends Component {
     );
   }
 }
-
-/*
-      <Card>
-        <Text style={{fontWeight: "bold", fontSize: 20}}>{this.props.id}</Text>
-        <Text style={{fontSize: 15}}>{(this.props.name) ? this.props.name : "<new device>"}</Text>
-        <Text style={{fontSize: 10}}>{(this.props.isConnectable) ? "Connectable" : "Not Connectable"}</Text>
-      </Card>
-*/

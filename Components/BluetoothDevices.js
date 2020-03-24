@@ -20,15 +20,9 @@ export default class Configure extends Component {
   }
 
   displayDevices() {
-    let out = [];
-
-    for(i = 0; i < 10; i++) {
-      out.push(
-        <Device/>
-      )
-    }
-
-    return out;
+    return Object.keys(this.props.devices).map((x)=>{
+      return (<Device key={x} name={this.props.devices[x].name} id={x} isConnectable={this.props.devices[x].isConnectable} device={this.props.devices[x].device} connect={this.props.connect} />);
+    });
 
   }
 
