@@ -24,7 +24,7 @@ export default class Configure extends Component {
 
   render() {
     return (
-        <Card>
+        <Card containerStyle={{ margin: 5, flex: 1 }}>
           <View style={{ flexDirection: "row", justifyContent:  "space-between", alignItems: "center"}}>
             <View>
               <Text style={{ fontSize: 15 }}>1E:AD:F3:58:B9:D3</Text>

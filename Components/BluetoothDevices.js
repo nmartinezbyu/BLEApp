@@ -38,7 +38,7 @@ export default class Configure extends Component {
           <Text style={{ fontSize: 20, marginBottom: 10, color: 'rgba(15,134,193,1)' }} onPress={this.props.toggle}>Close</Text>
           <Text style={{ fontSize: 30 }}>Available Devices</Text>
           <Divider style={{ backgroundColor: 'rgba(15,134,193,.7)' }} />
-          <ScrollView style={{ marginTop: 10 }}>
+          <ScrollView>
             {this.displayDevices()}
           </ScrollView>
         </Overlay>
